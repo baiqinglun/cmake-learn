@@ -372,6 +372,70 @@ target_link_libraries(demo PUBLIC D:/Desktop/demo/other_li/libaddition.a)
 
 
 
+# 使用第三方库
+
+```cmake
+include(FetchContent)
+FetchContent_Declare(jsoncpp
+        GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+        GIT_TAG 1.9.4)
+FetchContent_MakeAvailable(jsoncpp)
+target_link_libraries(H2_shock PUBLIC jsoncpp_lib)
+```
+
+使用
+
+```c++
+#include <iostream>
+#include "json/json.h"
+#include <string> //字符串类 c++标准库
+using namespace YExcel;
+
+
+// 测试jsoncpp
+void testJson();
+void testJson(){
+    string str;
+    Json::Value root;
+    Json::CharReaderBuilder ReaderBuilder;
+    // 打开文件
+    ifstream ifs;
+    ifs.open("example.json");
+	// 解析json
+    Json::parseFromStream(ReaderBuilder,ifs,&root,&str);
+    // 输出
+    std::cout << root["encoding"];
+}
+
+int main() {
+    testJson();
+    return 0;
+}
+
+```
+
+
+
+```json
+// example.json
+
+{
+  "encoding" : "UTF-8",
+  "plug-ins" : [
+    "python",
+    "c++",
+    "ruby"
+  ],
+  "indent" : { "length" : 3, "use_space": true }
+}
+```
+
+
+
+![image-20230208105558001](https://test-123456-md-images.oss-cn-beijing.aliyuncs.com/img/202302081055098.png)
+
+
+
 # 实例：Excel
 
 创建目录，包含操作excel的文件
